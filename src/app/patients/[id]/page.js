@@ -19,6 +19,17 @@ export default function PatientDetailsPage() {
         }
     }, [params.id]);
 
+    useEffect(() => {
+        if (isEditing) {
+            document.body.classList.add('modal-open');
+        } else {
+            document.body.classList.remove('modal-open');
+        }
+
+        return () => document.body.classList.remove('modal-open');
+    }, [isEditing]);
+
+
     const fetchPatient = async (id) => {
         try {
             const response = await fetch(`/api/patients/${id}`);
@@ -318,7 +329,7 @@ function EditPatientModal({ patient, onClose, onSave }) {
         };
         onSave(processedData);
     };
-    
+
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto">
             <div className="w-full max-w-2xl bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl my-8">

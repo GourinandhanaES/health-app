@@ -41,6 +41,15 @@ export default function PatientsPage() {
         fetchPatients();
     }, []);
 
+    useEffect(() => {
+        if (isModalOpen) {
+            document.body.classList.add('modal-open');
+        } else {
+            document.body.classList.remove('modal-open');
+        }
+    }, [isModalOpen]);
+
+
     const fetchPatients = async () => {
         const res = await fetch('/api/patients', { cache: 'no-store' });
         const data = await res.json();
@@ -249,7 +258,7 @@ export default function PatientsPage() {
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto">
                     <div className="w-full max-w-2xl bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl my-8">
-                        <div className="flex items-center justify-between p-6 border-b border-zinc-800">
+                        <div className="flex items-center justify-between  p-6 border-b border-zinc-800">
                             <h2 className="text-xl font-bold text-white">{currentPatient ? 'Edit Patient' : 'Add New Patient'}</h2>
                             <button onClick={() => setIsModalOpen(false)} className="text-zinc-400 hover:text-white">
                                 <X className="h-5 w-5" />
@@ -353,8 +362,7 @@ function PatientCard({ patient, onEdit, onDelete }) {
                     {patient.status}
                 </span>
                 <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
-                    <Button variant="ghost" className="h-7 w-7 p-0" onClick={() => { }}><Edit className="h-3 w-3" /></Button>
-                    <Button variant="ghost" className="h-7 w-7 p-0" onClick={() => { }}><Trash2 className="h-3 w-3" /></Button>
+                    <Button variant="ghost" className="h-7 w-7 p-0" onClick={() => { }}><Phone className="h-3 w-3" /></Button>
                 </div>
             </div>
         </Card>
